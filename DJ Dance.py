@@ -2,6 +2,7 @@ import pgzrun
 import pygame
 import random
 import sys
+import time
 #pgzero
 WIDTH = 840 # Width of the window
 HEIGHT = 630 # Height of the window
@@ -14,27 +15,26 @@ lnna = Actor("lnna", (250, 60))
 rnna = Actor("rnna", (593, 60))
 dnna = Actor("dnna", (365, 60))
 unna = Actor("unna", (470, 60))
+gos = Actor('g. o. s.')
 notes = [Actor("ln", (250, 690)), Actor("rn", (593, 690)), Actor("un", (470, 690)), Actor("dn", (365, 690))]
 nr = random.randint(0, 3)
 count = 0
+bf = Actor("bflose")
+mode = 1
 #Music
 music.play_once('kpytoi_ihct.wav')
 #Drawing
 def draw():
     global nr
-    if music.is_playing('Kto_eto_chitaet_tot_losos_po_tatarski'):
-        bg_djk.draw()
-        screen.draw.text(str(count), pos = (10, 10), color = 'white', fontsize = 36)
-        lnna.draw()
-        rnna.draw()
-        dnna.draw()
-        unna.draw()
-        notes[nr].draw()
-    else:
-        exit()
-def losedraw():
-    sounds.hah.play()
-    alpha_img.fill((255, 255, 255, alpha))
+    bg_djk.draw()
+    screen.draw.text(str(count), pos = (10, 10), color = 'white', fontsize = 36)
+    lnna.draw()
+    rnna.draw()
+    dnna.draw()
+    unna.draw()
+    notes[nr].draw()
+    if mode == 4:
+        gos.draw()
 #Moving
 def muf():
     global nr
@@ -49,11 +49,21 @@ def muf():
 def update(dt):
     global nr
     global count
+    global mode
     muf()
     if count > 50:
         count = 50
-    if count < 50:
-        losedraw()
+    if count < -50:
+        music.stop()
+        mode = 4
+    if mode == 4 and keyboard.r:
+        mode = 1
+    if mode == 4:
+        while mode == 4:
+            if count < 0:
+                count = 0
+            if keyboard.r:
+                break
 #Arrow Check
 def on_key_down(key):
     global nr
