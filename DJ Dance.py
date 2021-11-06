@@ -38,59 +38,75 @@ easy = Actor("easydif", (410, 270))
 LangSel = Actor("rl", (420, 130))
 button_sprites = ["button", "button_2"]
 notes = [Actor("ln", (250, 690)), Actor("rn", (593, 690)), Actor("un", (470, 690)), Actor("dn", (365, 690))]
+bg_l2 = Actor("bg_l2")
 nr = random.randint(0, 3)
 count = 0
 bf = Actor("bflose")
-mode = 7
+mode = 6
 hitted = 0
 lang = "americ"
 level = 1
+speed = 6 * level + 7
+bonus = 0
 
 #Music
 music.play_once('breakfast.ogg')
 
 #Drawing
 def draw():
-    global nr
-    global mode
-    global hitted
-    if music.is_playing("ns"):
-        bg_djk.draw()
-        if lang == "americ" and mode == 1:
-            screen.draw.text("Score: " + str(count), center = (420, 12), color = 'white', fontsize = 36)
-        if lang == "rus" and mode == 1:
-            screen.draw.text("Счёт: " + str(count), center = (420, 12), color = 'white', fontsize = 36)
-        lnna.draw()
-        rnna.draw()
-        dnna.draw()
-        unna.draw()
-        notes[nr].draw()
-        if hitted == 1:
-           lbd.draw()
-           if notes[nr].y <600:
-               hitted = 0
-        if hitted == 2:
-           rbd.draw()
-           if notes[nr].y <600:
-               hitted = 0
-        if hitted == 3:
-           ubd.draw()
-           if notes[nr].y <600:
-               hitted = 0
-        if hitted == 4:
-           dbd.draw()
-           if notes[nr].y <600:
-               hitted = 0
-               
+    global nr, mode, hitted, level, bonus
     #Win Check
-    if not music.is_playing("o|oo|o") and count > 0 and mode != 5 and mode != 6:
+    if not music.is_playing("o|oo|o") and count > 0 and mode == 1:
         mode = 2
         ws.draw()
-        
     #TA(Try Again) Check
-    if not music.is_playing("o|oo|o") and count < 0 and mode != 4 and mode != 5 and mode != 1:
+    if not music.is_playing("o|oo|o") and count < 0 and mode == 1:
         tys.draw()
         mode = 3
+
+    #**********************************************
+    if music.is_playing("0m0gus"):
+        if mode == 1:
+            if level == 1:
+                bg_djk.draw()
+            if level == 2:
+                bg_l2.draw()        
+            batan0.y = 1010101
+            batan1.y = 736198653921
+            batan2.y = 21376819723613981236
+            batan3.y = 786587453649823640923069264027364982764872364
+            if lang == "americ" and mode == 1:
+                screen.draw.text("Score: " + str(count), center = (420, 12), color = 'white', fontsize = 36)
+                screen.draw.text("LEVEL: " + str(level), center = (420, 512), color = 'white', fontsize = 36)
+                if bonus > 0:
+                    screen.draw.text("BONUS: " + str(bonus), center = (720, 512), color = 'white', fontsize = 36)
+                screen.draw.text("ESC -> MENU", (20, 582), color = 'white', fontsize = 36)
+            if lang == "rus" and mode == 1:
+                screen.draw.text("Счёт: " + str(count), center = (420, 12), color = 'white', fontsize = 36)
+                screen.draw.text("Уровень: " + str(level), center = (420, 512), color = 'white', fontsize = 36)
+                screen.draw.text("ESC -> Выход в меню", (20, 582), color = 'white', fontsize = 36)
+            lnna.draw()
+            rnna.draw()
+            dnna.draw()
+            unna.draw()
+            notes[nr].draw()
+            if hitted == 1:
+               lbd.draw()
+               if notes[nr].y <600:
+                   hitted = 0
+            if hitted == 2:
+               rbd.draw()
+               if notes[nr].y <600:
+                   hitted = 0
+            if hitted == 3:
+               ubd.draw()
+               if notes[nr].y <600:
+                   hitted = 0
+            if hitted == 4:
+               dbd.draw()
+               if notes[nr].y <600:
+                   hitted = 0               
+#*******************************************                   
         
     #If mode is four
     if mode == 4:
@@ -118,44 +134,7 @@ def draw():
         LangSel.draw()
         
     #If mode is one
-    if mode == 1:
-        batan0.y = 1010101
-        batan1.y = 736198653921
-        batan2.y = 21376819723613981236
-        batan3.y = 786587453649823640923069264027364982764872364
-        
-        bg_djk.draw()
-        
-        if lang == "americ" and mode == 1:
-            screen.draw.text("Score: " + str(count), center = (420, 12), color = 'white', fontsize = 36)
-            
-        if lang == "rus" and mode == 1:
-            screen.draw.text("Счёт: " + str(count), center = (420, 12), color = 'white', fontsize = 36)
-        lnna.draw()
-        rnna.draw()
-        dnna.draw()
-        unna.draw()
-        notes[nr].draw()
-        
-        if hitted == 1:
-           lbd.draw()
-           if notes[nr].y <600:
-               hitted = 0
-               
-        if hitted == 2:
-           rbd.draw()
-           if notes[nr].y <600:
-               hitted = 0
-               
-        if hitted == 3:
-           ubd.draw()
-           if notes[nr].y <600:
-               hitted = 0
-               
-        if hitted == 4:
-           dbd.draw()
-           if notes[nr].y <600:
-               hitted = 0
+
         
     if lang == "americ" and mode == 5:
         screen.draw.text('RESUME', pos =(360, 120), color="black", fontsize = 36)
@@ -188,27 +167,25 @@ def draw():
 #Moving
 def muf():
     #Globals
-    global nr
-    global count
+    global nr, count
     
     if notes[nr].y < 0:
         notes[nr].y = 690
         nr = random.randint(0, 3)
         count -= 3
     else:
-        notes[nr].y -= 13
+        notes[nr].y -= speed
 
 #Update DT
 def update(dt):
     #Globals
-    global nr
-    global count
-    global mode
+    global nr, count, mode, level, speed, bonus
     
     #Other
     muf()
     if count > 50:
         count = 50
+        bonus = bonus +1
         
     if count < -50:
         if mode != 5:
@@ -218,17 +195,27 @@ def update(dt):
     if mode == 4 and keyboard.r:
         mode = 1
         count = 0
+        level = 1
         music.play_once("kpytoi_ihct.wav")
         
     if mode == 3 and keyboard.r:
         mode = 1
         count = 0
+        level = 1
         music.play_once("kpytoi_ihct.wav")
         
     if mode == 2 and keyboard.r:
         mode = 1
         count = 0
+        level = 1
         music.play_once("kpytoi_ihct.wav")
+    if mode == 2 and keyboard.space:
+        mode = 1
+        count = 0
+        level = level + 1
+        speed = 6 * level + 5
+        music.play_once("making tracks....mp3")
+     
 #Definder of menu
 def menu():
     global mode
@@ -262,9 +249,12 @@ def on_mouse_down(pos, button):
     global mode, count, lang
 
     #If buttons is pressed
-    if batan0.collidepoint(pos) and mode != 6 and mode != 7:
+    if batan0.collidepoint(pos) and mode != 6 and mode != 7 and level == 1:
         mode = 1
-        music.play_once("kpytoi_ihct.wav")
+        music.play_once("ninau_cho_eta.wav")
+    if batan0.collidepoint(pos) and mode != 6 and mode != 7 and level == 2:
+        mode = 1
+        music.play_once("making tracks....mp3")
         
     if batan1.collidepoint(pos) and mode != 6 and mode != 7:
         music.play_once("kpytoi_ihct.wav")
@@ -290,17 +280,14 @@ def on_mouse_down(pos, button):
 #Arrow Check
 def on_key_down(key):
     #Globals
-    global nr
-    global count
-    global hitted
-    global mode
-    
+    global nr, count, hitted, mode, level, speed
+
     #Menu Check
     if key == keys.ESCAPE:
         menu()
         
     #Keys Check
-    if ((key == keys.LEFT or keyboard.a and nr == 0) or (key == keys.RIGHT or keyboard.d and nr == 1) or (key == keys.UP or keyboard.w and nr == 2) or (key == keys.DOWN or keyboard.s and nr == 3)) and notes[nr].y <100:
+    if ((key == keys.LEFT and nr == 0) or (key == keys.RIGHT and nr == 1) or (key == keys.UP and nr == 2) or (key == keys.DOWN and nr == 3)) and notes[nr].y <100:
         count += 10
         nr = random.randint(0, 3)
         notes[nr].y=690
