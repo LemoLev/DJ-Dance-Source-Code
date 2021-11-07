@@ -84,6 +84,8 @@ def draw():
             if lang == "rus" and mode == 1:
                 screen.draw.text("Счёт: " + str(count), center = (420, 12), color = 'white', fontsize = 36)
                 screen.draw.text("Уровень: " + str(level), center = (420, 512), color = 'white', fontsize = 36)
+                if bonus > 0:
+                    screen.draw.text("БОНУС: " + str(bonus), center = (720, 512), color = 'white', fontsize = 36)
                 screen.draw.text("ESC -> Выход в меню", (20, 582), color = 'white', fontsize = 36)
             lnna.draw()
             rnna.draw()
@@ -183,8 +185,12 @@ def update(dt):
     
     #Other
     muf()
-    if count > 50:
+    if count > 50 and level == 1:
         count = 50
+        bonus = bonus +1
+
+    if count > 80 and level == 2:
+        count = 80
         bonus = bonus +1
         
     if count < -50:
@@ -192,27 +198,44 @@ def update(dt):
             mode = 4
             music.stop()
             
-    if mode == 4 and keyboard.r:
+    if mode == 4 and keyboard.r and level == 1:
         mode = 1
         count = 0
         level = 1
         music.play_once("kpytoi_ihct.wav")
+    if mode == 4 and keyboard.r and level == 2:
+        mode = 1
+        count = 0
+        level = 1
+        music.play_once("kpytoi_ihct.wav")
+    
+    if mode == 3 and keyboard.r and level == 1:
+        mode = 1
+        count = 0
+        level = 1
+        music.play_once("kpytoi_ihct.wav")
+    if mode == 3 and keyboard.r and level == 2:
+        mode = 1
+        count = 0
+        level = 1
+        music.play_once("making tracks....mp3")
         
-    if mode == 3 and keyboard.r:
+    if mode == 2 and keyboard.r and level == 1:
         mode = 1
         count = 0
         level = 1
         music.play_once("kpytoi_ihct.wav")
+    if mode == 2 and keyboard.r and level == 2:
+        mode = 1
+        count = 0
+        level = 1
+        music.play_once("making tracks....mp3")
         
-    if mode == 2 and keyboard.r:
-        mode = 1
-        count = 0
-        level = 1
-        music.play_once("kpytoi_ihct.wav")
     if mode == 2 and keyboard.space:
         mode = 1
-        count = 0
-        level = level + 1
+        count += bonus
+        bonus = 0
+        level += 1
         speed = 6 * level + 5
         music.play_once("making tracks....mp3")
      
