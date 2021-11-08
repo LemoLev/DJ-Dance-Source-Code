@@ -48,7 +48,7 @@ tfp = Actor('tfp')
 mode = 5
 hitted = 0
 lang = "americ"
-level = 1
+level = 2
 speed = 6 * level + 7
 bonus = 0
 
@@ -222,8 +222,14 @@ def update(dt):
     if mode == 4 and keyboard.r and level == 2:
         mode = 1
         count = 0
-        level = 1
-        music.play_once("kpytoi_ihct.wav")
+        level = 2
+        music.play_once("making tracks....mp3")
+    
+    if mode == 4 and keyboard.r and level == 3:
+        mode = 1
+        count = 0
+        level = 3
+        music.play_once("escape from monster! (remake).mp3") 
     
     if mode == 3 and keyboard.r and level == 1:
         mode = 1
@@ -233,19 +239,29 @@ def update(dt):
     if mode == 3 and keyboard.r and level == 2:
         mode = 1
         count = 0
-        level = 1
+        level = 2
         music.play_once("making tracks....mp3")
-        
+    
+    if mode == 3 and keyboard.r and level == 3:
+        mode = 1
+        count = 0
+        level = 3
+        music.play_once("escape from monster! (remake).mp3") 
     if mode == 2 and keyboard.r and level == 1:
         mode = 1
         count = 0
-        level = 1
+        level = 31
         music.play_once("kpytoi_ihct.wav")
     if mode == 2 and keyboard.r and level == 2:
         mode = 1
         count = 0
-        level = 1
+        level = 2
         music.play_once("making tracks....mp3")
+    if mode == 2 and keyboard.r and level == 3:
+        mode = 1
+        count = 0
+        level = 3
+        music.play_once("escape from monster! (remake).mp3")
         
     if mode == 2 and keyboard.space and level == 1:
         mode = 1
@@ -264,8 +280,8 @@ def update(dt):
     if mode == 2 and keyboard.space and level == 3:
         mode = 7
         music.play_once("tfp.wav")
-        if not music.is_playing('amogus'):
-            music.play_once("amogus")
+        if not music.is_playing('tfp.wav'):
+            music.play_once("amogus.wav")
      
 #Definder of menu
 def menu():
@@ -306,13 +322,20 @@ def on_mouse_down(pos, button):
     if batan0.collidepoint(pos) and mode != 6 and mode != 7 and level == 2:
         mode = 1
         music.play_once("making tracks....mp3")
+    if batan0.collidepoint(pos) and mode != 6 and mode != 7 and level == 3:
+        mode = 1
+        music.play_once("escape from monster! (remake).mp3")
         
     if batan1.collidepoint(pos) and mode != 6 and mode != 7 and level == 1:
         music.play_once("kpytoi_ihct.wav")
         mode = 1
         count = 0
     if batan1.collidepoint(pos) and mode != 6 and mode != 7 and level == 2:
-        music.play_once("kpytoi_ihct.wav")
+        music.play_once("making tracks....mp3")
+        mode = 1
+        count = 0
+    if batan1.collidepoint(pos) and mode != 6 and mode != 7 and level == 3:
+        music.play_once("escape from monster! (remake).mp3")
         mode = 1
         count = 0
         
@@ -326,10 +349,12 @@ def on_mouse_down(pos, button):
         lang = "rus"
         LangSel.image = "al"
         miny.image = "msr"
+        tfp.image = "tfpr"
     elif LangSel.collidepoint(pos) and LangSel.image == "al" and mode == 6:
         lang = "americ"
         LangSel.image = "rl"
         miny.image = "menu_screen"
+        tfp.image = "tfp"
     if batan4.collidepoint(pos):
         print("https://form.jotform.com/213090427439051")
     
