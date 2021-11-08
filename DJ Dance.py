@@ -23,6 +23,7 @@ ubd = Actor("ubd", (470, 60))
 miny = Actor("menu_screen")
 gos = Actor('gos')
 ws = Actor("ws")
+bs = Actor("bs")
 tys = Actor("try_again")
 batan0 = Actor("button", (410, 130))
 batan1 = Actor("button", (410, 200))
@@ -39,10 +40,12 @@ LangSel = Actor("rl", (420, 130))
 button_sprites = ["button", "button_2"]
 notes = [Actor("ln", (250, 690)), Actor("rn", (593, 690)), Actor("un", (470, 690)), Actor("dn", (365, 690))]
 bg_l2 = Actor("bg_l2")
+bg_l3 = Actor("bg_l3")
 nr = random.randint(0, 3)
 count = 0
 bf = Actor("bflose")
-mode = 6
+tfp = Actor('tfp')
+mode = 5
 hitted = 0
 lang = "americ"
 level = 1
@@ -70,7 +73,10 @@ def draw():
             if level == 1:
                 bg_djk.draw()
             if level == 2:
-                bg_l2.draw()        
+                bg_l2.draw()
+            if level == 3:
+                bg_l3.draw()
+                
             batan0.y = 1010101
             batan1.y = 736198653921
             batan2.y = 21376819723613981236
@@ -135,11 +141,16 @@ def draw():
         batan4.draw()
         LangSel.draw()
         
-    #If mode is one
-
+    #If mode is seven
+    if mode == 7:
+        bs.draw()
+        tfp.draw()
+        for i in range(40):
+            tfp.y -= 0.01
         
     if lang == "americ" and mode == 5:
-        screen.draw.text('RESUME', pos =(360, 120), color="black", fontsize = 36)
+        screen.draw.text('RESUME/', pos =(370, 114), color="black", fontsize = 30)
+        screen.draw.text('    START', pos =(355, 128), color="black", fontsize = 25)
         screen.draw.text('RESTART SONG', pos =(340, 190), color="black", fontsize = 27)
         screen.draw.text('QUIT', pos =(380, 260), color="black", fontsize = 36)
         screen.draw.text('OPTIONS', pos =(353, 330), color="black", fontsize = 36)
@@ -161,7 +172,8 @@ def draw():
 
 
     if lang == "rus" and mode == 5:
-        screen.draw.text('ПРОДОЛЖИТЬ', pos =(345, 122), color="black", fontsize = 25)
+        screen.draw.text('ПРОДОЛЖИТЬ/', pos =(345, 114), color="black", fontsize = 25)
+        screen.draw.text('    СТАРТ', pos =(355, 128), color="black", fontsize = 25)
         screen.draw.text('РЕСТАРТ', pos =(360, 190), color="black", fontsize = 34)
         screen.draw.text('ВЫЙТИ', pos =(360, 259), color="black", fontsize = 36)
         screen.draw.text('НАСТРОЙКИ', pos =(346, 330), color="black", fontsize = 30)
@@ -170,13 +182,13 @@ def draw():
 def muf():
     #Globals
     global nr, count
-    
-    if notes[nr].y < 0:
-        notes[nr].y = 690
-        nr = random.randint(0, 3)
-        count -= 3
-    else:
-        notes[nr].y -= speed
+    if mode == 1:
+        if notes[nr].y < 0:
+            notes[nr].y = 690
+            nr = random.randint(0, 3)
+            count -= 3
+        else:
+            notes[nr].y -= speed
 
 #Update DT
 def update(dt):
@@ -187,11 +199,15 @@ def update(dt):
     muf()
     if count > 50 and level == 1:
         count = 50
-        bonus = bonus +1
+        bonus += 1
 
     if count > 80 and level == 2:
         count = 80
-        bonus = bonus +1
+        bonus += 1
+        
+    if count > 110 and level == 3:
+        count = 110
+        bonus += 1
         
     if count < -50:
         if mode != 5:
@@ -231,13 +247,25 @@ def update(dt):
         level = 1
         music.play_once("making tracks....mp3")
         
-    if mode == 2 and keyboard.space:
+    if mode == 2 and keyboard.space and level == 1:
         mode = 1
-        count += bonus
+        count = bonus
         bonus = 0
         level += 1
-        speed = 6 * level + 5
+        speed = 6 * level + 7
         music.play_once("making tracks....mp3")
+    if mode == 2 and keyboard.space and level == 2:
+        mode = 1
+        count = bonus
+        bonus = 0
+        level += 1
+        speed = 6 * level + 7
+        music.play_once("escape from monster! (remake).mp3")
+    if mode == 2 and keyboard.space and level == 3:
+        mode = 7
+        music.play_once("tfp.wav")
+        if not music.is_playing('amogus'):
+            music.play_once("amogus")
      
 #Definder of menu
 def menu():
@@ -274,12 +302,16 @@ def on_mouse_down(pos, button):
     #If buttons is pressed
     if batan0.collidepoint(pos) and mode != 6 and mode != 7 and level == 1:
         mode = 1
-        music.play_once("ninau_cho_eta.wav")
+        music.play_once("kpytoi_ihct.wav")
     if batan0.collidepoint(pos) and mode != 6 and mode != 7 and level == 2:
         mode = 1
         music.play_once("making tracks....mp3")
         
-    if batan1.collidepoint(pos) and mode != 6 and mode != 7:
+    if batan1.collidepoint(pos) and mode != 6 and mode != 7 and level == 1:
+        music.play_once("kpytoi_ihct.wav")
+        mode = 1
+        count = 0
+    if batan1.collidepoint(pos) and mode != 6 and mode != 7 and level == 2:
         music.play_once("kpytoi_ihct.wav")
         mode = 1
         count = 0
@@ -293,9 +325,11 @@ def on_mouse_down(pos, button):
     if LangSel.collidepoint(pos) and LangSel.image == "rl" and mode == 6:
         lang = "rus"
         LangSel.image = "al"
+        miny.image = "msr"
     elif LangSel.collidepoint(pos) and LangSel.image == "al" and mode == 6:
         lang = "americ"
         LangSel.image = "rl"
+        miny.image = "menu_screen"
     if batan4.collidepoint(pos):
         print("https://form.jotform.com/213090427439051")
     
