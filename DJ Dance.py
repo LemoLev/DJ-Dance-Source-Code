@@ -48,7 +48,7 @@ tfp = Actor('tfp')
 mode = 5
 hitted = 0
 lang = "americ"
-level = 2
+level = 1
 speed = 6 * level + 7
 bonus = 0
 
