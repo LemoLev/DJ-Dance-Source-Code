@@ -366,10 +366,10 @@ def on_mouse_down(pos, button):
         music.play_once("kpytoi_ihct.wav")
     if batan0.collidepoint(pos) and mode != 6 and mode != 7 and level == 2:
         mode = 1
-        music.play_once("making tracks....mp3")
+        music.play_once("making_tracks.mp3")
     if batan0.collidepoint(pos) and mode != 6 and mode != 7 and level == 3:
         mode = 1
-        music.play_once("escape from monster! (remake).mp3")
+        music.play_once("efm.mp3")
 
     if batan1.collidepoint(pos) and mode != 6 and mode != 7 and level == 1:
         music.play_once("kpytoi_ihct.wav")
