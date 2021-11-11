@@ -8,7 +8,6 @@ HEIGHT = 630
 TITLE = "DJ Dance by ! LemoLev"
 # Frames per second
 FPS = 30
-
 # Actors
 bg_djk = Actor("bg_djk")
 lnna = Actor("lnna", (250, 60))
@@ -37,17 +36,17 @@ med = Actor("meddif", (410, 200))
 easy = Actor("easydif", (410, 270))
 LangSel = Actor("rl", (420, 130))
 button_sprites = ["button", "button_2"]
-notes = [Actor("ln", (250, 690)), Actor("rn", (593, 690)), Actor("un", (470, 690)), Actor("dn", (365, 690))]
+notes = [Actor("ln", (250, 690)), Actor("rn", (593, 690)), 
+         Actor("un", (470, 690)), Actor("dn", (365, 690))]
 bg_l2 = Actor("bg_l2")
 bg_l3 = Actor("bg_l3")
-nr = random.randint(0, 3)
-count = 0
-bf = Actor("bflose")
 djk = Actor("djk1", (420, 315))
 djkanim = ["djk1", "djk-4", "djk-3", "djk2", "djk3", "djk-2", "djk4", "djk-1"]
 djkcanim = ["djk1c", "djk-4c", "djk-3c", "djk2c", "djk3c", "djk-2c", "djk4c", "djk-1c"]
 djkwanim = ["djk1w", "djk-4w", "djk-3w", "djk2w", "djk3w", "djk-2w", "djk4w", "djk-1w"]
 tfp = Actor('tfp')
+nr = random.randint(0, 3)
+count = 0
 mode = 5
 hitted = 0
 lang = "americ"
@@ -58,10 +57,8 @@ i = 0
 cs = 0
 k = 200
 n = 0
-
 # Music
 music.play_once('breakfast.ogg')
-
 # Drawing
 def draw():
     global nr, mode, hitted, level, bonus, i, cs, k, n
@@ -73,7 +70,6 @@ def draw():
     if not music.is_playing("o|oo|o") and count < 0 and mode == 1:
         tys.draw()
         mode = 3
-
     # **********************************************
     if music.is_playing("0m0gus"):
         if mode == 1:
@@ -95,13 +91,13 @@ def draw():
                     i += 1
                     cs = 0
                     if level == 3:
-                        if n==0:
+                        if n == 0:
                             k += 1
-                        if n==1:
+                        if n == 1:
                             k -= 1
-                        if k==260:
+                        if k == 260:
                             n = 0
-                        if k==320:
+                        if k == 320:
                             n = 1
                         djk.y = k
                     
@@ -117,7 +113,7 @@ def draw():
             batan1.y = 736198653921
             batan2.y = 21376819723613981236
             batan3.y = 786587453649823640923069264027364982764872364
-# *************************************************
+            # *************************************************
             if lang == "americ" and mode == 1:
                 screen.draw.text('Score: ' + str(count),
                                  center=(420, 12), color='white', fontsize=36)
@@ -135,9 +131,8 @@ def draw():
                 if bonus > 0:
                     screen.draw.text('БОНУС: ' + str(bonus),
                                      center=(720, 512), color='white', fontsize=36)
-                screen.draw.text('ESC -> Выход в меню', (20, 582),
-                                 color='white', fontsize=36)
-# ************************************************
+                screen.draw.text('ESC -> В меню', (20, 582), color='white', fontsize=36)
+            # ************************************************
             lnna.draw()
             rnna.draw()
             dnna.draw()
@@ -159,7 +154,7 @@ def draw():
                 dbd.draw()
                 if notes[nr].y < 600:
                     hitted = 0
-# *******************************************
+            # *******************************************
 
     # If mode is four
     if mode == 4:
@@ -185,7 +180,11 @@ def draw():
         miny.draw()
         batan4.draw()
         LangSel.draw()
-
+        if lang == "americ":
+            screen.draw.text('ESC -> MENU', (100, 582), color='white', fontsize=36)
+        else:
+            screen.draw.text('ESC -> МЕНЮ', (100, 582), color='white', fontsize=36)
+        
     # If mode is seven
     if mode == 7:
         bs.draw()
@@ -221,7 +220,6 @@ def draw():
         screen.draw.text('РЕСТАРТ', pos=(360, 190), color="black", fontsize=34)
         screen.draw.text('ВЫЙТИ', pos=(360, 259), color="black", fontsize=36)
         screen.draw.text('НАСТРОЙКИ', pos=(346, 330), color="black", fontsize=30)
-
 # Moving
 def muf():
     # Globals
@@ -234,7 +232,6 @@ def muf():
             count -= 3
         else:
             notes[nr].y -= speed
-
 # Update DT
 def update(dt):
     # Globals
@@ -415,7 +412,7 @@ def on_key_down(key):
     if ((key == keys.LEFT and nr == 0) or (key == keys.RIGHT and nr == 1)
             or (key == keys.UP and nr == 2)
             or (key == keys.DOWN and nr == 3)) and notes[nr].y < 100:
-        # ***** суммируем очки в зависимости от уровня ****
+        # ***** summing up the points depending on the level ****
         if level == 1:
             count += 3
         if level == 2:
@@ -425,15 +422,16 @@ def on_key_down(key):
 # *********************************************************
         nr = random.randint(0, 3)
         notes[nr].y = 690
-        if key == keys.LEFT or keyboard.a:
+        if key == keys.LEFT:
             hitted = 1
-        if key == keys.RIGHT or keyboard.d:
+        if key == keys.RIGHT:
             hitted = 2
             rbd.draw()
-        if key == keys.UP or keyboard.w:
+        if key == keys.UP:
             hitted = 3
             ubd.draw()
-        if key == keys.DOWN or keyboard.s:
+        if key == keys.DOWN:
             hitted = 4
             dbd.draw()
 pgzrun.go()
+
