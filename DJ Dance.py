@@ -285,13 +285,13 @@ def update(dt):
         mode = 1
         count = 0
         level = 2
-        music.play_once("making tracks....mp3")
+        music.play_once("making_tracks.mp3")
 
     if mode == 3 and keyboard.r and level == 3:
         mode = 1
         count = 0
         level = 3
-        music.play_once("escape from monster! (remake).mp3")
+        music.play_once("efm.mp3")
     if mode == 2 and keyboard.r and level == 1:
         mode = 1
         count = 0
@@ -301,12 +301,12 @@ def update(dt):
         mode = 1
         count = 0
         level = 2
-        music.play_once("making tracks....mp3")
+        music.play_once("making_tracks.mp3")
     if mode == 2 and keyboard.r and level == 3:
         mode = 1
         count = 0
         level = 3
-        music.play_once("escape from monster! (remake).mp3")
+        music.play_once("efm.mp3")
 
     if mode == 2 and keyboard.space and level == 1:
         mode = 1
@@ -314,14 +314,14 @@ def update(dt):
         bonus = 0
         level += 1
         speed = 6 * level + 7
-        music.play_once("making tracks....mp3")
+        music.play_once("making_tracks....mp3")
     if mode == 2 and keyboard.space and level == 2:
         mode = 1
         count = bonus
         bonus = 0
         level += 1
         speed = 6 * level + 7
-        music.play_once("escape from monster! (remake).mp3")
+        music.play_once("efm.mp3")
     if mode == 2 and keyboard.space and level == 3:
         mode = 7
         music.play_once("tfp.wav")
