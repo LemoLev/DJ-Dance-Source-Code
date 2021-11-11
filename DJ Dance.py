@@ -268,13 +268,13 @@ def update(dt):
         mode = 1
         count = 0
         level = 2
-        music.play_once("making tracks....mp3")
+        music.play_once("making_tracks.mp3")
 
     if mode == 4 and keyboard.r and level == 3:
         mode = 1
         count = 0
         level = 3
-        music.play_once("escape from monster! (remake).mp3")
+        music.play_once("efm.mp3")
 
     if mode == 3 and keyboard.r and level == 1:
         mode = 1
