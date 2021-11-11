@@ -314,7 +314,7 @@ def update(dt):
         bonus = 0
         level += 1
         speed = 6 * level + 7
-        music.play_once("making tracks....mp3")
+        music.play_once("making_tracks.mp3")
     if mode == 2 and keyboard.space and level == 2:
         mode = 1
         count = bonus
